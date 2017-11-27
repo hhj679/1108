@@ -20,7 +20,7 @@ import asyncComponent from './AsyncComponent'
 
 import Home from 'containers/Home/Home'
 import ReactChildrenMap from './containers/Commons/ReactChildrenMap'
-const Search = asyncComponent(() => import(/* webpackChunkName: "search" */ "./containers/Search/Search"))
+const Business = asyncComponent(() => import(/* webpackChunkName: "search" */ "./containers/Business/Business"))
 const BookList = asyncComponent(() => import(/* webpackChunkName: "bookList" */ "./containers/BookList/BookList"))
 
 @connect (
@@ -51,7 +51,7 @@ export default class App extends React.Component {
                         <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
                           <ReactChildrenMap key={location.pathname}>
                               <Route location={location} exact path="/" component={Home} />
-                              <Route location={location} path="/search" component={Search} />
+                              <Route location={location} path="/business" component={Business} />
                               <Route location={location} path="/bookList/:bookId" component={BookList} />
                           </ReactChildrenMap>
                         </MuiThemeProvider>

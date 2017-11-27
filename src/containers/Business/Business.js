@@ -8,28 +8,19 @@ import PropTypes from 'prop-types'
 
 //关于import什么时候用{}，什么时候不用大括号，通过那个插件或者组件是否包含default来判断，如果包含，则不需要{}
 
-/*actions*/
-import * as home from 'actions/home'
-import * as global from 'actions/global'
-import * as sidebar from 'actions/sidebar'
-
-/*component*/
-// import Header from './components/Header'
-// import Nav from './components/Nav'
-// import Special from './components/Special'
-// import BookList from './components/BookList'
-
 import AppBar from 'material-ui/AppBar'
 import FontIcon from 'material-ui/FontIcon'
 import {blue500} from 'material-ui/styles/colors'
-
 import SideBar from 'containers/SideBar/SideBar'
-import Card from './components/Card'
+/*actions*/
+import * as business from 'actions/business'
+import * as global from 'actions/global'
+import * as sidebar from 'actions/sidebar'
 
-/*files*/
-const search = require('./files/search.svg')
+import Card from '../Home/components/Card'
+import Tabs from './components/Tabs'
 
-import './styles/home.less'
+import './styles/business.less'
 
 /**
  * connect中间件
@@ -39,10 +30,10 @@ import './styles/home.less'
  */
 
 @connect(
-    state => ({...state.home}),
-    dispatch => bindActionCreators({...home, ...global, ...sidebar}, dispatch)
+    state => ({...state.business}),
+    dispatch => bindActionCreators({...business, ...global, ...sidebar}, dispatch)
 )
-export default class Home extends React.Component {
+export default class Business extends React.Component {
 
     constructor(props) {
         super(props);
@@ -73,9 +64,8 @@ export default class Home extends React.Component {
     render() {
         // const { navMain, bookDetails } = this.props
         //还可以通过自定义样式传递给组件
-        let bgClass = { background: '#00bb9c' } //定义一个背景色的变量
         return(
-            <div className="home-main">
+            <div className="business-main">
                 <AppBar
                     title="首页"
                     iconElementRight={<FontIcon className="muidocs-icon-action-home"></FontIcon>}
@@ -83,15 +73,11 @@ export default class Home extends React.Component {
                     style={{backgroundColor: 'rgba(74, 127, 169, 1)'}}
                 />
                 <SideBar/>
-                <div className="home-content">
-                    <Card title="市场容量" subtitle="各厂商产品近半年市场容量"></Card>
-                    <Card title="产品价格" subtitle="产品今年价格变化曲线"></Card>
-                    <Card title="专利"></Card>
-                </div>
+                <Tabs/>
             </div>
         )
     }
 }
-Home.propTypes = {
+Business.propTypes = {
 
 }
