@@ -34,11 +34,13 @@ export default class SideBar extends React.Component {
     handleItemClick(event, menuItem, index) {
         const { sidebarToggle } = this.props;
 
-        if(index == 0) {
-            window.location.hash='#/'
-        } else if(index == 1) {
-            window.location.hash='#/business'
-        }
+        window.location.hash = "#/" + menuItem.key;
+        
+        // if(index == 0) {
+        //     window.location.hash='#/'
+        // } else if(index == 1) {
+        //     window.location.hash='#/business'
+        // }
         sidebarToggle(false)
     }
     // upDateValue(value) {
@@ -54,7 +56,7 @@ export default class SideBar extends React.Component {
               docked={false}
               width={'70%'}
               open={open}
-              containerStyle={{backgroundColor:'rgba(74, 127, 169, 1)'}}
+              containerStyle={{backgroundColor:'rgba(74, 127, 169, 1)', overflowX:'hidden'}}
               onRequestChange={(open) => sidebarToggle(open)}
             >
             <div className="avatar-ontainer">

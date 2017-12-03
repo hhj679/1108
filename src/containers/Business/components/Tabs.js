@@ -2,69 +2,98 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import {Tabs, Tab} from 'material-ui/Tabs'
+import SwipeableViews from 'react-swipeable-views'
 import {List, ListItem} from 'material-ui/List'
 import FontIcon from 'material-ui/FontIcon'
 import Avatar from 'material-ui/Avatar'
 
+const styles = {
+  headline: {
+    fontSize: 24,
+    paddingTop: 16,
+    marginBottom: 12,
+    fontWeight: 400,
+  },
+  slide: {
+    padding: 10,
+  }
+};
+
 const ITabs = (props) => {
-    const { tabs } = props
-    return (
-      <div>
-        <Tabs
-        >
-          <Tab label="冰箱" value={0}>
-            <List>
-              <ListItem
-                primaryText="Chelsea 冰箱"
-                leftAvatar={<Avatar icon={<FontIcon className="material-icons">tv</FontIcon>}  />}
-              />
-              <ListItem
-                primaryText="James 冰箱"
-                leftAvatar={<Avatar icon={<FontIcon className="material-icons">important_devices</FontIcon>} />}
-              />
-            </List>
-          </Tab>
-          <Tab label="电视" value={1}>
-            <List>
-              <ListItem
-                primaryText="Chelsea 电视"
-                leftAvatar={<Avatar icon={<FontIcon className="material-icons">tv</FontIcon>}  />}
-              />
-              <ListItem
-                primaryText="James 电视"
-                leftAvatar={<Avatar icon={<FontIcon className="material-icons">important_devices</FontIcon>} />}
-              />
-            </List>
-          </Tab>
-          <Tab label="洗衣机" value={2}>
-            <List>
-              <ListItem
-                primaryText="Chelsea 洗衣机"
-                leftAvatar={<Avatar icon={<FontIcon className="material-icons">tv</FontIcon>}  />}
-              />
-              <ListItem
-                primaryText="James 洗衣机"
-                leftAvatar={<Avatar icon={<FontIcon className="material-icons">important_devices</FontIcon>} />}
-              />
-            </List>
-          </Tab>
-          <Tab label="空调" value={3}>
-            <List>
-              <ListItem
-                primaryText="Chelsea 空调"
-                leftAvatar={<Avatar icon={<FontIcon className="material-icons">tv</FontIcon>}  />}
-              />
-              <ListItem
-                primaryText="James 空调"
-                leftAvatar={<Avatar icon={<FontIcon className="material-icons">important_devices</FontIcon>} />}
-              />
-            </List>
-          </Tab>
-        </Tabs>
-      </div>
-    )
+  const { index, handleTabChange } = props
+  return (
+    <div>
+      <Tabs
+        onChange={handleTabChange}
+        value={index}
+      >
+        <Tab label="冰箱" value={0}>
+        </Tab>
+        <Tab label="电视" value={1}>
+        </Tab>
+        <Tab label="洗衣机" value={2}>
+        </Tab>
+        <Tab label="空调" value={3}>
+        </Tab>
+      </Tabs>
+      <SwipeableViews
+        index={index}
+        onChangeIndex={handleTabChange}
+      >
+        <div>
+          <List>
+            <ListItem
+              primaryText="Chelsea 冰箱"
+              leftAvatar={<Avatar icon={<FontIcon className="material-icons">tv</FontIcon>}  />}
+            />
+            <ListItem
+              primaryText="James 冰箱"
+              leftAvatar={<Avatar icon={<FontIcon className="material-icons">important_devices</FontIcon>} />}
+            />
+          </List>
+        </div>
+        <div style={styles.slide}>
+          <List>
+            <ListItem
+              primaryText="Chelsea 电视"
+              leftAvatar={<Avatar icon={<FontIcon className="material-icons">tv</FontIcon>}  />}
+            />
+            <ListItem
+              primaryText="James 电视"
+              leftAvatar={<Avatar icon={<FontIcon className="material-icons">important_devices</FontIcon>} />}
+            />
+          </List>
+        </div>
+        <div style={styles.slide}>
+          <List>
+            <ListItem
+              primaryText="Chelsea 洗衣机"
+              leftAvatar={<Avatar icon={<FontIcon className="material-icons">tv</FontIcon>}  />}
+            />
+            <ListItem
+              primaryText="James 洗衣机"
+              leftAvatar={<Avatar icon={<FontIcon className="material-icons">important_devices</FontIcon>} />}
+            />
+          </List>
+        </div>
+        <div style={styles.slide}>
+          <List>
+            <ListItem
+              primaryText="Chelsea 空调"
+              leftAvatar={<Avatar icon={<FontIcon className="material-icons">tv</FontIcon>}  />}
+            />
+            <ListItem
+              primaryText="James 空调"
+              leftAvatar={<Avatar icon={<FontIcon className="material-icons">important_devices</FontIcon>} />}
+            />
+          </List>
+        </div>
+      </SwipeableViews>
+    </div>
+  )
 }
 ITabs.propTypes = {
-    tabs: PropTypes.array
+    tabIndex: PropTypes.number,
+    handleTabChange: PropTypes.func
 }
 export default ITabs

@@ -12,6 +12,7 @@ new WebpackDevServer(webpack(config), {
     hot: true,
     compress: true,
     historyApiFallback: true,
+    disableHostCheck: true,
     publicPath: '/build/',
     watchOptions: {
         ignored: /node_modules/,
@@ -20,15 +21,15 @@ new WebpackDevServer(webpack(config), {
         modules: false,
         chunks: false
     },
-    setup(app) {
-        app.use(errorOverlayMiddleware())
-        if (process.env.NODE_ENV !== 'production') {
-            app.use('/book/*', proxy({
-                target: 'https://www.easy-mock.com/mock/593611b991470c0ac101d474',
-                secure: false
-            }))
-        }
-    }
+    // setup(app) {
+    //     app.use(errorOverlayMiddleware())
+    //     if (process.env.NODE_ENV !== 'production') {
+            // app.use('/book/*', proxy({
+            //     target: 'https://www.easy-mock.com/mock/593611b991470c0ac101d474',
+            //     secure: false
+            // }))
+        // }
+    // }
 }).listen(webpackServerConfig.port, webpackServerConfig.host, function (err, result) {
     if (err) {
         return console.log(err);

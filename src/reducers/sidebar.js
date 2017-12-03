@@ -7,22 +7,28 @@ let initData = {
     },
     menus: [{
         text: '首页',
-        id: 'home'
+        id: 'home',
+        key: 'home'
     }, {
         text: '行业',
-        id: 'business'
+        id: 'business',
+        key: 'business'
     }, {
         text: '厂商',
-        id: 'view_compact'
+        id: 'view_compact',
+        key: 'company'
     }, {
         text: '产品',
-        id: 'storage'
+        id: 'storage',
+        key: 'product'
     }, {
         text: '专利',
-        id: 'widgets'
+        id: 'widgets',
+        key: 'patent'
     }, {
         text: '软件',
-        id: 'album'
+        id: 'album',
+        key: 'software'
     }]
 }
 

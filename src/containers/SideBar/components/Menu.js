@@ -11,7 +11,7 @@ const IMenu = (props) => {
       <Menu menuItemStyle={{fontSize: '1.4rem', color: 'white', lineHeight: '4.3rem'}} onItemTouchTap={handleItemClick}>
         {
           menus.map(function(elem, index) {
-            return(<MenuItem primaryText={elem.text} leftIcon={<FontIcon className="material-icons menu-icon">{elem.id}</FontIcon>} key={index}/>)
+            return(<MenuItem primaryText={elem.text} leftIcon={<FontIcon className="material-icons menu-icon">{elem.id}</FontIcon>} key={elem.key}/>)
           })
         }
       </Menu>

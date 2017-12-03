@@ -13,13 +13,15 @@ import FontIcon from 'material-ui/FontIcon'
 import {blue500} from 'material-ui/styles/colors'
 import SideBar from 'containers/SideBar/SideBar'
 /*actions*/
-import * as business from 'actions/business'
+import * as company from 'actions/company'
 import * as global from 'actions/global'
 // import * as sidebar from 'actions/sidebar'
 
-import Tabs from './components/Tabs'
+import CompanyDetail from '../Company/components/CompanyDetail'
 
-import './styles/business.less'
+import { getArrayItemById } from '../../utils/array'
+
+import './styles/detail.less'
 
 /**
  * connect中间件
@@ -29,10 +31,10 @@ import './styles/business.less'
  */
 
 @connect(
-    state => ({...state.business}),
-    dispatch => bindActionCreators({...business, ...global}, dispatch)
+    state => ({...state.company}),
+    dispatch => bindActionCreators({...company, ...global}, dispatch)
 )
-export default class Business extends React.Component {
+export default class Detail extends React.Component {
 
     constructor(props) {
         super(props);
@@ -60,15 +62,25 @@ export default class Business extends React.Component {
     // }
 
     render() {
-        const { tabIndex, swipeTabs } = this.props
+        const { match, companys } = this.props;
+        const { type, id } = match.params;
+
+        let detailJSX = null;
+
+        if(type == 'company') {
+            const company = getArrayItemById(companys, id);
+            detailJSX = (<CompanyDetail company={company}/>)
+        }
+        
         //还可以通过自定义样式传递给组件
         return(
             <div className="business-main">
-                <Tabs index={tabIndex} handleTabChange={swipeTabs}/>
+                {detailJSX}
             </div>
         )
     }
 }
-Business.propTypes = {
 
+Detail.propTypes = {
+    
 }

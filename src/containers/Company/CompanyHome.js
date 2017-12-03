@@ -13,13 +13,13 @@ import FontIcon from 'material-ui/FontIcon'
 import {blue500} from 'material-ui/styles/colors'
 import SideBar from 'containers/SideBar/SideBar'
 /*actions*/
-import * as business from 'actions/business'
+import * as company from 'actions/company'
 import * as global from 'actions/global'
 // import * as sidebar from 'actions/sidebar'
 
-import Tabs from './components/Tabs'
+import CompanyList from './components/CompanyList'
 
-import './styles/business.less'
+import './styles/company.less'
 
 /**
  * connect中间件
@@ -29,16 +29,17 @@ import './styles/business.less'
  */
 
 @connect(
-    state => ({...state.business}),
-    dispatch => bindActionCreators({...business, ...global}, dispatch)
+    state => ({...state.company}),
+    dispatch => bindActionCreators({...company, ...global}, dispatch)
 )
-export default class Business extends React.Component {
+export default class CompanyHome extends React.Component {
 
     constructor(props) {
         super(props);
         //构造函数用法
         //常用来绑定自定义函数，切记不要在这里或者组件的任何位置setState，state全部在reducer初始化，相信对开发的后期很有帮助
         //例子：this.myfunction = this.myfunction.bind(this)
+        this.handleCompanyItemClick = this.handleCompanyItemClick.bind(this);
     }
 
     componentWillMount() {
@@ -59,16 +60,20 @@ export default class Business extends React.Component {
     //     sidebarToggle();
     // }
 
+    handleCompanyItemClick(id) {
+        window.location = "#/detail/company/" + id;
+    }
+
     render() {
-        const { tabIndex, swipeTabs } = this.props
+        const { companys } = this.props
         //还可以通过自定义样式传递给组件
         return(
             <div className="business-main">
-                <Tabs index={tabIndex} handleTabChange={swipeTabs}/>
+                <CompanyList companys={companys} onItemClick={this.handleCompanyItemClick}/>
             </div>
         )
     }
 }
-Business.propTypes = {
+CompanyHome.propTypes = {
 
 }

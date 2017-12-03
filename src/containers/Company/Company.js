@@ -13,13 +13,15 @@ import FontIcon from 'material-ui/FontIcon'
 import {blue500} from 'material-ui/styles/colors'
 import SideBar from 'containers/SideBar/SideBar'
 /*actions*/
-import * as business from 'actions/business'
+import * as company from 'actions/company'
 import * as global from 'actions/global'
 // import * as sidebar from 'actions/sidebar'
 
-import Tabs from './components/Tabs'
+import CompanyDetail from './components/CompanyDetail'
 
-import './styles/business.less'
+import getArrayItemById from '../../util/array'
+
+import './styles/company.less'
 
 /**
  * connect中间件
@@ -29,10 +31,10 @@ import './styles/business.less'
  */
 
 @connect(
-    state => ({...state.business}),
-    dispatch => bindActionCreators({...business, ...global}, dispatch)
+    state => ({...state.company}),
+    dispatch => bindActionCreators({...company, ...global}, dispatch)
 )
-export default class Business extends React.Component {
+export default class Company extends React.Component {
 
     constructor(props) {
         super(props);
@@ -60,15 +62,16 @@ export default class Business extends React.Component {
     // }
 
     render() {
-        const { tabIndex, swipeTabs } = this.props
+        const { companys, id } = this.props
+        const company = getArrayItemById(companys, id);
         //还可以通过自定义样式传递给组件
         return(
             <div className="business-main">
-                <Tabs index={tabIndex} handleTabChange={swipeTabs}/>
+                <CompanyDetail company={company}/>
             </div>
         )
     }
 }
-Business.propTypes = {
+Company.propTypes = {
 
 }

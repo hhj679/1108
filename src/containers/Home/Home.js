@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 /*actions*/
 import * as home from 'actions/home'
 import * as global from 'actions/global'
-import * as sidebar from 'actions/sidebar'
+// import * as sidebar from 'actions/sidebar'
 
 /*component*/
 // import Header from './components/Header'
@@ -23,8 +23,8 @@ import AppBar from 'material-ui/AppBar'
 import FontIcon from 'material-ui/FontIcon'
 import {blue500} from 'material-ui/styles/colors'
 
-import SideBar from 'containers/SideBar/SideBar'
-import Card from './components/Card'
+// import SideBar from 'containers/SideBar/SideBar'
+import Card from '../Commons/Card'
 
 /*files*/
 const search = require('./files/search.svg')
@@ -40,7 +40,7 @@ import './styles/home.less'
 
 @connect(
     state => ({...state.home}),
-    dispatch => bindActionCreators({...home, ...global, ...sidebar}, dispatch)
+    dispatch => bindActionCreators({...home, ...global}, dispatch)
 )
 export default class Home extends React.Component {
 
@@ -49,7 +49,6 @@ export default class Home extends React.Component {
         //构造函数用法
         //常用来绑定自定义函数，切记不要在这里或者组件的任何位置setState，state全部在reducer初始化，相信对开发的后期很有帮助
         //例子：this.myfunction = this.myfunction.bind(this)
-        this.handleLeftIconClick = this.handleLeftIconClick.bind(this)
     }
 
     componentWillMount() {
@@ -63,12 +62,12 @@ export default class Home extends React.Component {
         // }
     }
 
-    handleLeftIconClick() {
-        //该函数用来执行组件内部的事件，比如在这里就是nav组件菜单的导航点击事件
-        // this.props.history.push('/')
-        const { sidebarToggle } = this.props;
-        sidebarToggle();
-    }
+    // handleLeftIconClick() {
+    //     //该函数用来执行组件内部的事件，比如在这里就是nav组件菜单的导航点击事件
+    //     // this.props.history.push('/')
+    //     const { sidebarToggle } = this.props;
+    //     sidebarToggle();
+    // }
 
     render() {
         // const { navMain, bookDetails } = this.props
@@ -76,13 +75,6 @@ export default class Home extends React.Component {
         let bgClass = { background: '#00bb9c' } //定义一个背景色的变量
         return(
             <div className="home-main">
-                <AppBar
-                    title="首页"
-                    iconElementRight={<FontIcon className="muidocs-icon-action-home"></FontIcon>}
-                    onLeftIconButtonTouchTap={this.handleLeftIconClick}
-                    style={{backgroundColor: 'rgba(74, 127, 169, 1)'}}
-                />
-                <SideBar/>
                 <div className="home-content">
                     <Card title="市场容量" subtitle="各厂商产品近半年市场容量"></Card>
                     <Card title="产品价格" subtitle="产品今年价格变化曲线"></Card>
