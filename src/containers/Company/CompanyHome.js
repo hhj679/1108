@@ -62,6 +62,7 @@ export default class CompanyHome extends React.Component {
 
     handleCompanyItemClick(id) {
         window.location = "#/detail/company/" + id;
+        // window.location.reload();
     }
 
     render() {

@@ -30,8 +30,11 @@ class ICard extends React.Component {
             titleJSX = (<CardTitle title={title} subtitle={subtitle} />)
         }
         const mystyle= style||{};
-        mystyle.backroundColor = 'white',
-        mystyle.margin = '.5rem';
+        mystyle.backroundColor = 'white';
+        if(!mystyle.margin) {
+            mystyle.margin = '2rem';
+        }
+        
         mystyle.minHeight = '12rem';
         return (
             <Card expanded={false} style={mystyle}>

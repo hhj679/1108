@@ -58,11 +58,13 @@ export default class SideBar extends React.Component {
               open={open}
               containerStyle={{backgroundColor:'rgba(74, 127, 169, 1)', overflowX:'hidden'}}
               onRequestChange={(open) => sidebarToggle(open)}
+              zDepth={5}
+              className="sidebar"
             >
-            <div className="avatar-ontainer">
-                <Avatar user={user}/>
-            </div>
-            <Menu menus={menus} handleItemClick={this.handleItemClick}/>
+                <div className="avatar-ontainer">
+                    <Avatar user={user}/>
+                </div>
+                <Menu menus={menus} handleItemClick={this.handleItemClick}/>
             </Drawer>
         )
     }

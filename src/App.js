@@ -64,9 +64,10 @@ export default class App extends React.Component {
                           transitionLeave={true}
                           transitionEnterTimeout={400}
                           transitionLeaveTimeout={400}
+                          className="css-group"
                       >
-                        <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-                          <div>
+                        <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)} >
+                          <div className="root-main">
                             <AppBar
                               title="首页"
                               iconElementRight={<FontIcon className="muidocs-icon-action-home"></FontIcon>}
@@ -75,11 +76,11 @@ export default class App extends React.Component {
                             />
                             <SideBar/>
                             <ReactChildrenMap key={location.pathname}>
-                                <Route location={location} exact path="/" component={Home} />
-                                <Route location={location} path="/home" component={Home} />
-                                <Route location={location} path="/business" component={Business} />
-                                <Route location={location} path="/company" component={CompanyHome} />
-                                <Route location={location} path="/detail/:type/:id" component={DeTail} />
+                                <Route location={location} exact path="/" component={Home}/>
+                                <Route location={location} path="/home" component={Home}/>
+                                <Route location={location} path="/business" component={Business}/>
+                                <Route location={location} path="/company" component={CompanyHome}/>
+                                <Route location={location} path="/detail/:type/:id" component={DeTail}/>
                             </ReactChildrenMap>
                           </div>
                         </MuiThemeProvider>

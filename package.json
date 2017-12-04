@@ -64,6 +64,7 @@
     "core-js": "^2.5.1",
     "echarts": "^3.6.2",
     "fastclick": "^1.0.6",
+    "highcharts": "^6.0.3",
     "history": "^4.6.1",
     "jroll": "^2.5.0",
     "material-ui": "^0.19.4",
