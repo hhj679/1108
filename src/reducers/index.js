@@ -1,17 +1,19 @@
 import { home } from './home'
-import { search } from './search'
 import { global } from './global'
 import { sidebar } from './sidebar'
 import { business } from './business'
 import { company } from './company'
+import { product } from './product'
+import { software } from './software'
 
 const rootReducer = {
   /* your reducers */
   home, //首页相关
-  search, //搜索相关
   global,
   sidebar,
   business,
-  company
+  company,
+  product,
+  software
 }
 export default rootReducer

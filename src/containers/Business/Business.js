@@ -63,7 +63,7 @@ export default class Business extends React.Component {
         const { tabIndex, swipeTabs } = this.props
         //还可以通过自定义样式传递给组件
         return(
-            <div className="business-main">
+            <div className="business-main main-body">
                 <Tabs index={tabIndex} handleTabChange={swipeTabs}/>
             </div>
         )

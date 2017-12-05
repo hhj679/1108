@@ -8,7 +8,7 @@ import FontIcon from 'material-ui/FontIcon'
 const IMenu = (props) => {
     const { menus, handleItemClick } = props
     return (
-      <Menu menuItemStyle={{fontSize: '1.4rem', color: 'white', lineHeight: '4.3rem'}} onItemTouchTap={handleItemClick}>
+      <Menu menuItemStyle={{fontSize: '1.4rem', color: 'white', lineHeight: '4.3rem'}} onItemClick={handleItemClick}>
         {
           menus.map(function(elem, index) {
             return(<MenuItem primaryText={elem.text} leftIcon={<FontIcon className="material-icons menu-icon">{elem.id}</FontIcon>} key={elem.key}/>)

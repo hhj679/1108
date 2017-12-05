@@ -13,7 +13,7 @@ import App from './App'
 import createHistory from 'history/createBrowserHistory'
 import rootReducer from './reducers/index'
 
-var FastClick = require('fastclick')
+// var FastClick = require('fastclick')
 
 //按模块导入lodash，可以有效减小vendor.js的大小
 import isEmpty from 'lodash/isEmpty'
@@ -30,7 +30,7 @@ const history = createHistory()
 const middleware = routerMiddleware(history)
 
 //解决移动端300毫秒延迟
-FastClick.attach(document.body)
+// FastClick.attach(document.body)
 const middlewares = [thunk, middleware]
 
 const store = createStore(

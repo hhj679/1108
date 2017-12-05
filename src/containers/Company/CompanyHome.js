@@ -69,7 +69,7 @@ export default class CompanyHome extends React.Component {
         const { companys } = this.props
         //还可以通过自定义样式传递给组件
         return(
-            <div className="business-main">
+            <div className="main-body">
                 <CompanyList companys={companys} onItemClick={this.handleCompanyItemClick}/>
             </div>
         )

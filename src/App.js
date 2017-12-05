@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Route, Router } from 'react-router-dom'
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+// import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import createHistory from 'history/createHashHistory'
 const history = createHistory()
 
@@ -25,9 +25,11 @@ import FontIcon from 'material-ui/FontIcon'
 import Home from 'containers/Home/Home'
 import SideBar from 'containers/SideBar/SideBar'
 import ReactChildrenMap from './containers/Commons/ReactChildrenMap'
-const Business = asyncComponent(() => import(/* webpackChunkName: "search" */ "./containers/Business/Business"))
-const CompanyHome = asyncComponent(() => import(/* webpackChunkName: "bookList" */ "./containers/Company/CompanyHome"))
-const DeTail = asyncComponent(() => import(/* webpackChunkName: "bookList" */ "./containers/DeTail/DeTail"))
+const Business = asyncComponent(() => import(/* webpackChunkName: "business" */ "./containers/Business/Business"))
+const CompanyHome = asyncComponent(() => import(/* webpackChunkName: "company" */ "./containers/Company/CompanyHome"))
+const DeTail = asyncComponent(() => import(/* webpackChunkName: "deTail" */ "./containers/DeTail/DeTail"))
+const Product = asyncComponent(() => import(/* webpackChunkName: "product" */ "./containers/Product/Product"))
+const Software = asyncComponent(() => import(/* webpackChunkName: "software" */ "./containers/Software/Software"))
 
 @connect (
     state => {return {...state.global}},
@@ -58,20 +60,12 @@ export default class App extends React.Component {
           <Router history={history}>
               <Route render={({ location }) => {
                   return(
-                      <CSSTransitionGroup
-                          transitionName={animateCls}
-                          transitionEnter={true}
-                          transitionLeave={true}
-                          transitionEnterTimeout={400}
-                          transitionLeaveTimeout={400}
-                          className="css-group"
-                      >
                         <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)} >
                           <div className="root-main">
                             <AppBar
                               title="首页"
                               iconElementRight={<FontIcon className="muidocs-icon-action-home"></FontIcon>}
-                              onLeftIconButtonTouchTap={that.handleHeaderMenuClick}
+                              onLeftIconButtonClick={that.handleHeaderMenuClick}
                               style={{backgroundColor: 'rgba(74, 127, 169, 1)'}}
                             />
                             <SideBar/>
@@ -81,10 +75,11 @@ export default class App extends React.Component {
                                 <Route location={location} path="/business" component={Business}/>
                                 <Route location={location} path="/company" component={CompanyHome}/>
                                 <Route location={location} path="/detail/:type/:id" component={DeTail}/>
+                                <Route location={location} path="/product" component={Product}/>
+                                <Route location={location} path="/software" component={Software}/>
                             </ReactChildrenMap>
                           </div>
                         </MuiThemeProvider>
-                      </CSSTransitionGroup>
                   )
               }}/>
           </Router>

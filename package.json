@@ -67,7 +67,7 @@
     "highcharts": "^6.0.3",
     "history": "^4.6.1",
     "jroll": "^2.5.0",
-    "material-ui": "^0.19.4",
+    "material-ui": "^0.20.0",
     "preact": "^8.2.6",
     "preact-compat": "^3.17.0",
     "prop-types": "^15.6.0",

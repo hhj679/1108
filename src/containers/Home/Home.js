@@ -26,8 +26,6 @@ import {blue500} from 'material-ui/styles/colors'
 // import SideBar from 'containers/SideBar/SideBar'
 import Card from '../Commons/Card'
 
-/*files*/
-const search = require('./files/search.svg')
 
 import './styles/home.less'
 
@@ -74,7 +72,7 @@ export default class Home extends React.Component {
         //还可以通过自定义样式传递给组件
         let bgClass = { background: '#00bb9c' } //定义一个背景色的变量
         return(
-            <div className="home-main">
+            <div className="home-main main-body">
                 <div className="home-content">
                     <Card title="市场容量" subtitle="各厂商产品近半年市场容量"></Card>
                     <Card title="产品价格" subtitle="产品今年价格变化曲线"></Card>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import Avatar from 'material-ui/Avatar'
 import Card from '../../Commons/Card'
+import Table from '../../Commons/Table'
 
 import echarts from 'echarts/lib/echarts'
 import 'echarts/lib/component/tooltip'
@@ -21,128 +22,6 @@ class CompanyDetail extends React.Component {
     }
 
     initPie() {
-        // const barOption = {
-        //     color: ['#3398DB'],
-        //     tooltip : {
-        //         trigger: 'axis',
-        //         axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-        //           type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        //         }
-        //     },
-        //     grid: {
-        //         left: '3%',
-        //         right: '4%',
-        //         bottom: '3%',
-        //         containLabel: true
-        //     },
-        //     xAxis : [{
-        //       type : 'category',
-        //       data : [],
-        //       axisTick: {
-        //         alignWithLabel: true
-        //       },
-        //       axisLabel: {
-        //         interval: 0,
-        //         rotate: 40,
-        //         formatter:function(value) {
-        //             // return value.split("").join("\n");
-        //             return value.substring(0, 4) + '...';
-        //         }
-        //       },
-        //       nameTextStyle: {
-        //         fontSize: '.1rem'
-        //       }
-        //     }],
-        //     yAxis : [{
-        //       type : 'value'
-        //     }],
-        //     series : [{
-        //       name:'',
-        //       type:'bar',
-        //       barWidth: '60%',
-        //       label: {
-        //         normal: {
-        //             show: true,
-        //             position: 'top'
-        //         }
-        //       },
-        //       data:[]
-        //     }]
-        // }
-
-        // const lineOption = {
-        //   tooltip : {
-        //     trigger: 'axis',
-        //     axisPointer: {
-        //       type: 'cross',
-        //       label: {
-        //         backgroundColor: '#6a7985'
-        //       }
-        //     }
-        //   },
-        //   grid: {
-        //     left: '3%',
-        //     right: '4%',
-        //     bottom: '3%',
-        //     containLabel: true
-        //   },
-        //   xAxis : [
-        //     {
-        //       type : 'category',
-        //       boundaryGap : false,
-        //       data : ['2010','2011','2012','2015','2016','2017']
-        //     }
-        //   ],
-        //   yAxis : [
-        //     {
-        //       type : 'value'
-        //     }
-        //   ],
-        //   series : [
-        //     {
-        //       name:'申请量',
-        //       type:'line',
-        //       stack: '总量',
-        //       data:[120, 101, 134, 90, 230, 210]
-        //     }
-        //   ]
-        // }
-
-        // const saleOption = Object.assign(barOption);
-        // saleOption.xAxis[0].data=['美的KF66/200L-MI(E4)', 
-        //     '美的 RSJ-15/190RDN3-C ', 
-        //     '美的 KF66/150L-MI(E4)', 
-        //     '美的 RSJ-20/100RD', 
-        //     '美的 BCD-439WTPM(E)', 
-        //     '美的 BCD-215WTM(E)', 
-        //     '美的 BCD-271VMQ', 
-        //     '美的 BCD-258WTPZM(E)', 
-        //     '美的 BCD-228WTPZM(E)', 
-        //     '美的 BCD-450WKZM(E)'
-        // ];
-        // saleOption.series[0].name='销量';
-        // saleOption.series[0].data=[1200, 1000, 900, 856, 824, 810, 800, 635, 621, 500];
-        // let saleChart = echarts.init(this.saleTopId) //初始化echarts
-        // saleChart.setOption(saleOption);
-
-
-        // const goodOption = Object.assign(barOption);
-        // goodOption.xAxis[0].data=['美的KF66/200L-MI(E4)', 
-        //     '美的 RSJ-15/190RDN3-C ', 
-        //     '美的 KF66/150L-MI(E4)', 
-        //     '美的 RSJ-20/100RD', 
-        //     '美的 BCD-439WTPM(E)', 
-        //     '美的 BCD-215WTM(E)', 
-        //     '美的 BCD-271VMQ', 
-        //     '美的 BCD-258WTPZM(E)', 
-        //     '美的 BCD-228WTPZM(E)', 
-        //     '美的 BCD-450WKZM(E)'
-        // ];
-        // goodOption.series[0].name='好评量';
-        // goodOption.series[0].data=[1200, 1000, 900, 856, 824, 810, 800, 635, 621, 500];
-        // let goodChart = echarts.init(this.goodTopId) //初始化echarts
-        // goodChart.setOption(goodOption);
-
         const barOption = {
             chart: {
                 type: 'column'
@@ -389,90 +268,21 @@ class CompanyDetail extends React.Component {
         }]
         Highcharts.chart(this.patenCategoryId, patenCategoryOption);
 
-        // const badOption = Object.assign(barOption);
-        // badOption.xAxis[0].data=['美的KF66/200L-MI(E4)', 
-        //     '美的 RSJ-15/190RDN3-C ', 
-        //     '美的 KF66/150L-MI(E4)', 
-        //     '美的 RSJ-20/100RD', 
-        //     '美的 BCD-439WTPM(E)', 
-        //     '美的 BCD-215WTM(E)', 
-        //     '美的 BCD-271VMQ', 
-        //     '美的 BCD-258WTPZM(E)', 
-        //     '美的 BCD-228WTPZM(E)', 
-        //     '美的 BCD-450WKZM(E)'
-        // ];
-        // badOption.series[0].name='差评量';
-        // badOption.series[0].data=[1200, 1000, 900, 856, 824, 810, 800, 635, 621, 500];
-        // let badChart = echarts.init(this.badTopId) //初始化echarts
-        // badChart.setOption(badOption);
+        const pojectYearOption = Object.assign(lineOption);
+        pojectYearOption.series.push({
+            name: '项目数',
+            data: [120, 101, 134, 90, 230, 210]
+        });
+        pojectYearOption.plotOptions.series.pointStart = 2012;
+        Highcharts.chart(this.projectLineId, pojectYearOption);
 
-
-
-        // let patenYearOption = lineOption;
-        // let patenYearChart = echarts.init(this.patenYearId);
-        // patenYearChart.setOption(patenYearOption);
-
-        // const patenPersonOption = Object.assign(barOption);
-        // patenPersonOption.xAxis[0].data=['小A', 
-        //     '小B', 
-        //     '小C', 
-        //     '小D', 
-        //     '小E', 
-        //     '小F', 
-        //     '小G', 
-        //     '小H', 
-        //     '小I', 
-        //     '小J'
-        // ];
-        // patenPersonOption.series[0].name='专利申请量';
-        // patenPersonOption.series[0].data=[100, 86, 75, 70, 68, 63, 58, 55, 50, 40];
-        // let patenPersonChart = echarts.init(this.patenPersonId) //初始化echarts
-        // patenPersonChart.setOption(patenPersonOption);
-
-
-        // const patenCategoryOption = Object.assign(barOption);
-        // patenCategoryOption.xAxis[0].data=['小A', 
-        //     '小B', 
-        //     '小C', 
-        //     '小D', 
-        //     '小E', 
-        //     '小F', 
-        //     '小G', 
-        //     '小H', 
-        //     '小I', 
-        //     '小J'
-        // ];
-        // patenCategoryOption.series[0].name='专利分类';
-        // patenCategoryOption.series[0].data=[100, 86, 75, 70, 68, 63, 58, 55, 50, 40];
-        // let patenCategoryChart = echarts.init(this.patenCategoryId) //初始化echarts
-        // patenCategoryChart.setOption(patenCategoryOption);
-
-
-        // window.onresize = function() {
-        //   saleChart.resize();
-        //   goodChart.resize();
-        //   badChart.resize();
-        //   patenYearChart.resize();
-        //   patenPersonChart.resize();
-        //   patenCategoryChart.resize();
-        // }
-
-        // this.saleTopId.style.display = 'none';
-        // this.goodTopId.style.display = 'none';
-        // this.badTopId.style.display = 'none';
-        // this.patenYearId.style.display = 'none';
-        // this.patenPersonId.style.display = 'none';
-        // this.patenCategoryId.style.display = 'none';
-        // const that = this;
-
-        // setTimeout(function() {
-        //     that.saleTopId.style.display = 'block';
-        //     that.goodTopId.style.display = 'block';
-        //     that.badTopId.style.display = 'block';
-        //     that.patenYearId.style.display = 'block';
-        //     that.patenPersonId.style.display = 'block';
-        //     that.patenCategoryId.style.display = 'block';
-        // }, 10);
+        const commitorYearOption = Object.assign(lineOption);
+        commitorYearOption.series.push({
+            name: '提交量',
+            data: [120, 101, 134, 90, 230, 210, 300, 318]
+        });
+        commitorYearOption.plotOptions.series.pointStart = 2010;
+        Highcharts.chart(this.commiteLineId, commitorYearOption);
     }
 
     componentDidMount() {
@@ -486,11 +296,60 @@ class CompanyDetail extends React.Component {
     render() {
         const { company={} } = this.props;
         const cardStyle = {
-            height: '14rem',
-            margin: '0 0 2rem 0',
-            borderStyle: 'groove none'
+            height: '16rem',
+            margin: '0'
+            // borderStyle: 'groove none'
         }
-        //提供4个接口参数给container做设置，可以不传参。
+        const tableCartStyle= {
+            margin: '0 0 2rem 0',
+            // borderStyle: 'groove none'
+        }
+
+        const projectHeader=["序号", "项目", "人数"];
+        const projectData = {
+            columns: ["project", "commitors"],
+            data: [{
+                project: 'project a',
+                commitors: '123'
+            }, {
+                project: 'project b',
+                commitors: '100'
+            }, {
+                project: 'project c',
+                commitors: '68'
+            }, {
+                project: 'project d',
+                commitors: '47'
+            }, {
+                project: 'project e',
+                commitors: '41'
+            }, {
+                project: 'project f',
+                commitors: '21'
+            }]
+        }
+
+        const commitorHeader=["序号", "投入人", "提交数"];
+        const commitorData = {
+            columns: ["commitor", "commites"],
+            data: [{
+                commitor: 'commitor a',
+                commites: '123'
+            }, {
+                commitor: 'commitor b',
+                commites: '100'
+            }, {
+                commitor: 'commitor c',
+                commites: '68'
+            }, {
+                commitor: 'commitor d',
+                commites: '47'
+            }, {
+                commitor: 'commitor e',
+                commites: '41'
+            }]
+        }
+
         return (
             <div className="company-detail">
                 <Card headerTitle={company.name} headerAvatar={company.logo} headerSubtitle={company.en}>
@@ -522,6 +381,21 @@ class CompanyDetail extends React.Component {
                     </Card>
                     <Card headerTitle="专利分类" headerSubtitle="来自电商数据" style={cardStyle}>
                         <div ref={id => this.patenCategoryId = id} className="barchart"></div>
+                    </Card>
+                </Card>
+
+                <Card title="软件技术">
+                    <Card headerTitle="项目" headerSubtitle="来自开源网站数据" style={tableCartStyle}>
+                        <Table data={projectData} header={projectHeader} height="auto"/>
+                    </Card>
+                    <Card headerTitle="每年投入项目" headerSubtitle="来自开源网站数据" style={cardStyle}>
+                        <div ref={id => this.projectLineId = id} className="barchart"></div>
+                    </Card>
+                    <Card headerTitle="软件技术人才" headerSubtitle="来自开源网站数据" style={tableCartStyle}>
+                         <Table data={commitorData} header={commitorHeader} height="auto"/>
+                    </Card>
+                    <Card headerTitle="每年项目提交数" headerSubtitle="来自开源网站数据" style={cardStyle}>
+                        <div ref={id => this.commiteLineId = id} className="barchart"></div>
                     </Card>
                 </Card>
             </div>

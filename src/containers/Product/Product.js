@@ -13,15 +13,13 @@ import FontIcon from 'material-ui/FontIcon'
 import {blue500} from 'material-ui/styles/colors'
 import SideBar from 'containers/SideBar/SideBar'
 /*actions*/
-import * as company from 'actions/company'
+import * as product from 'actions/product'
 import * as global from 'actions/global'
 // import * as sidebar from 'actions/sidebar'
 
-import CompanyDetail from '../Company/components/CompanyDetail'
+import ProductCategory from './components/ProductCategory'
 
-import { getArrayItemById } from '../../utils/array'
-
-import './styles/detail.less'
+import './styles/product.less'
 
 /**
  * connect中间件
@@ -31,16 +29,17 @@ import './styles/detail.less'
  */
 
 @connect(
-    state => ({...state.company}),
-    dispatch => bindActionCreators({...company, ...global}, dispatch)
+    state => ({...state.product}),
+    dispatch => bindActionCreators({...product, ...global}, dispatch)
 )
-export default class Detail extends React.Component {
+export default class Product extends React.Component {
 
     constructor(props) {
         super(props);
         //构造函数用法
         //常用来绑定自定义函数，切记不要在这里或者组件的任何位置setState，state全部在reducer初始化，相信对开发的后期很有帮助
         //例子：this.myfunction = this.myfunction.bind(this)
+        this.handleItemClick = this.handleItemClick.bind(this);
     }
 
     componentWillMount() {
@@ -61,26 +60,21 @@ export default class Detail extends React.Component {
     //     sidebarToggle();
     // }
 
+    handleItemClick(id) {
+        window.location = "#/detail/product/" + id;
+        // window.location.reload();
+    }
+
     render() {
-        const { match, companys } = this.props;
-        const { type, id } = match.params;
-
-        let detailJSX = null;
-
-        if(type == 'company') {
-            const company = getArrayItemById(companys, id);
-            detailJSX = (<CompanyDetail company={company}/>)
-        }
-        
+        const { category } = this.props
         //还可以通过自定义样式传递给组件
         return(
-            <div className="detail-main main-body">
-                {detailJSX}
+            <div className="main-body">
+                <ProductCategory category={category} onItemClick={this.handleItemClick}/>
             </div>
         )
     }
 }
+Product.propTypes = {
 
-Detail.propTypes = {
-    
 }

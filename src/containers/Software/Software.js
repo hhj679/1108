@@ -8,20 +8,16 @@ import PropTypes from 'prop-types'
 
 //关于import什么时候用{}，什么时候不用大括号，通过那个插件或者组件是否包含default来判断，如果包含，则不需要{}
 
-import AppBar from 'material-ui/AppBar'
 import FontIcon from 'material-ui/FontIcon'
-import {blue500} from 'material-ui/styles/colors'
-import SideBar from 'containers/SideBar/SideBar'
+
 /*actions*/
-import * as company from 'actions/company'
+import * as software from 'actions/software'
 import * as global from 'actions/global'
 // import * as sidebar from 'actions/sidebar'
 
-import CompanyDetail from '../Company/components/CompanyDetail'
+import Tabs from './components/Tabs'
 
-import { getArrayItemById } from '../../utils/array'
-
-import './styles/detail.less'
+// import './styles/business.less'
 
 /**
  * connect中间件
@@ -31,10 +27,10 @@ import './styles/detail.less'
  */
 
 @connect(
-    state => ({...state.company}),
-    dispatch => bindActionCreators({...company, ...global}, dispatch)
+    state => ({...state.software}),
+    dispatch => bindActionCreators({...software, ...global}, dispatch)
 )
-export default class Detail extends React.Component {
+export default class Software extends React.Component {
 
     constructor(props) {
         super(props);
@@ -62,25 +58,15 @@ export default class Detail extends React.Component {
     // }
 
     render() {
-        const { match, companys } = this.props;
-        const { type, id } = match.params;
-
-        let detailJSX = null;
-
-        if(type == 'company') {
-            const company = getArrayItemById(companys, id);
-            detailJSX = (<CompanyDetail company={company}/>)
-        }
-        
+        const { tabIndex, swipeTabs } = this.props
         //还可以通过自定义样式传递给组件
         return(
-            <div className="detail-main main-body">
-                {detailJSX}
+            <div className="business-main main-body">
+                <Tabs index={tabIndex} handleTabChange={swipeTabs}/>
             </div>
         )
     }
 }
+Software.propTypes = {
 
-Detail.propTypes = {
-    
 }

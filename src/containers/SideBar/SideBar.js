@@ -10,11 +10,21 @@ import PropTypes from 'prop-types'
 import * as sidebar from 'actions/sidebar'
 
 import Avatar from './components/Avatar'
-import Menu from './components/Menu'
+// import Menu from './components/Menu'
 
 import Drawer from 'material-ui/Drawer'
+import MenuItem from 'material-ui/MenuItem'
+import FontIcon from 'material-ui/FontIcon'
 
 import './styles/sidebar.less'
+
+const menuItemStyle = {
+    fontFamily: 'Roboto, sans-serif',
+    fontAize: '1.4rem',
+    color: 'white',
+    lineHeight: '4.3rem'
+}
+
 
 @connect(
     state => ({...state.sidebar}),
@@ -31,10 +41,10 @@ export default class SideBar extends React.Component {
         // console.log('进入搜索页面')
         // this.props.receiveHotSearch()
     }
-    handleItemClick(event, menuItem, index) {
+    handleItemClick(key) {
         const { sidebarToggle } = this.props;
 
-        window.location.hash = "#/" + menuItem.key;
+        window.location.hash = "#/" + key;
         
         // if(index == 0) {
         //     window.location.hash='#/'
@@ -50,7 +60,8 @@ export default class SideBar extends React.Component {
     //     this.setState(() => { return {currentHot: text} })
     // }
     render() {
-        const { open, user, menus, sidebarToggle } = this.props
+        const { open, user, menus, sidebarToggle } = this.props;
+        const that = this;
         return (
             <Drawer
               docked={false}
@@ -64,7 +75,20 @@ export default class SideBar extends React.Component {
                 <div className="avatar-ontainer">
                     <Avatar user={user}/>
                 </div>
-                <Menu menus={menus} handleItemClick={this.handleItemClick}/>
+                {/*<Menu menus={menus} handleItemClick={this.handleItemClick}/> */}
+                {
+                  menus.map(function(elem, index) {
+                    return(
+                        <MenuItem 
+                            primaryText={elem.text} 
+                            onClick={that.handleItemClick.bind(that, elem.key)} 
+                            leftIcon={<FontIcon className="material-icons menu-icon">{elem.id}</FontIcon>} 
+                            key={elem.key}
+                            innerDivStyle={menuItemStyle}
+                        />
+                    )
+                  })
+                }
             </Drawer>
         )
     }

@@ -32,7 +32,7 @@ class ICard extends React.Component {
         const mystyle= style||{};
         mystyle.backroundColor = 'white';
         if(!mystyle.margin) {
-            mystyle.margin = '2rem';
+            mystyle.margin = '0 1rem';
         }
         
         mystyle.minHeight = '12rem';

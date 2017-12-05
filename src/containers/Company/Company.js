@@ -66,7 +66,7 @@ export default class Company extends React.Component {
         const company = getArrayItemById(companys, id);
         //还可以通过自定义样式传递给组件
         return(
-            <div className="business-main">
+            <div className="company-main main-body">
                 <CompanyDetail company={company}/>
             </div>
         )
