@@ -8,23 +8,17 @@ import PropTypes from 'prop-types'
 
 //关于import什么时候用{}，什么时候不用大括号，通过那个插件或者组件是否包含default来判断，如果包含，则不需要{}
 
-import FontIcon from 'material-ui/FontIcon'
-
 /*actions*/
-import * as software from 'actions/software'
+import * as patent from 'actions/patent'
 import * as global from 'actions/global'
-// import * as sidebar from 'actions/sidebar'
-
-import { lineOption, barOption } from '../../utils/highchartUtils'
-
-import cloneDeep from 'lodash/cloneDeep'
 
 // import Tabs from './components/Tabs'
 import Card from '../Commons/Card'
+import Table from '../Commons/Table'
 
-import Highcharts from 'highcharts'
+import ChinaMap from '../Commons/ChinaMap'
 
-// import './styles/business.less'
+import './styles/patent.less'
 
 /**
  * connect中间件
@@ -39,10 +33,10 @@ import Highcharts from 'highcharts'
  }
 
 @connect(
-    state => ({...state.software}),
-    dispatch => bindActionCreators({...software, ...global}, dispatch)
+    state => ({...state.patent}),
+    dispatch => bindActionCreators({...patent, ...global}, dispatch)
 )
-export default class Software extends React.Component {
+export default class Patent extends React.Component {
 
     constructor(props) {
         super(props);
@@ -64,22 +58,7 @@ export default class Software extends React.Component {
     }
 
     initChart() {
-        const { top10Project, top10Talent, top10Company } = this.props
 
-        const topProjectOption = cloneDeep(barOption);
-        topProjectOption.series[0].name = 'Star数';
-        topProjectOption.series[0].data= top10Project
-        Highcharts.chart(this.topProjectId, topProjectOption);
-
-        const topTalentOption = cloneDeep(barOption);
-        topTalentOption.series[0].name = 'Commit数';
-        topTalentOption.series[0].data= top10Talent
-        Highcharts.chart(this.topTalentId, topTalentOption);
-
-        const topCompanyOption = cloneDeep(barOption);
-        topCompanyOption.series[0].name = 'Commitor数';
-        topCompanyOption.series[0].data= top10Company
-        Highcharts.chart(this.topCompanyId, topCompanyOption);
     }
 
     componentDidMount() {
@@ -92,22 +71,40 @@ export default class Software extends React.Component {
 
     render() {
         const { tabIndex, swipeTabs } = this.props
+
+        const patentPeopleHeader=["序号", "申请人", "专利数"];
+        const patentPeopleData = {
+            columns: ["people", "patents"],
+            data: [{
+                people: 'people a',
+                patents: '123'
+            }, {
+                people: 'people b',
+                patents: '100'
+            }, {
+                people: 'people c',
+                patents: '68'
+            }, {
+                people: 'people d',
+                patents: '47'
+            }, {
+                people: 'people e',
+                patents: '41'
+            }]
+        }
         //还可以通过自定义样式传递给组件
         return(
-            <div className="business-main main-body">
-                <Card title="IOT TOP 10项目" subtitle="数据来自开源社区">
-                    <div ref={id => this.topProjectId = id} style={cardStyle}></div>
+            <div className="patent-main main-body">
+                <Card title="专利分布">
+                    <ChinaMap/>
                 </Card>
-                <Card title="IOT TOP 10人才" subtitle="数据来自开源社区">
-                    <div ref={id => this.topTalentId = id} style={cardStyle}></div>
-                </Card>
-                <Card title="IOT TOP 10厂商" subtitle="数据来自开源社区">
-                    <div ref={id => this.topCompanyId = id} style={cardStyle}></div>
+                <Card title="专利人才">
+                    <Table data={patentPeopleData} header={patentPeopleHeader} height="auto"/>
                 </Card>
             </div>
         )
     }
 }
-Software.propTypes = {
+Patent.propTypes = {
 
 }

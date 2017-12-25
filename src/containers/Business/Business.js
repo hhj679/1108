@@ -60,11 +60,22 @@ export default class Business extends React.Component {
     // }
 
     render() {
-        const { tabIndex, swipeTabs } = this.props
+        const { tabIndex, swipeTabs, icepriceLine, airpriceLine, tvpriceLine, washerpriceLine, iceCompanyMarket, tvCompanyMarket, airCompanyMarket, washerCompanyMarket } = this.props
         //还可以通过自定义样式传递给组件
         return(
             <div className="business-main main-body">
-                <Tabs index={tabIndex} handleTabChange={swipeTabs}/>
+                <Tabs 
+                    index={tabIndex} 
+                    handleTabChange={swipeTabs} 
+                    icepriceLine={icepriceLine}
+                    airpriceLine={airpriceLine}
+                    tvpriceLine={tvpriceLine}
+                    washerpriceLine={washerpriceLine}
+                    iceCompanyMarket={iceCompanyMarket}
+                    tvCompanyMarket={tvCompanyMarket}
+                    airCompanyMarket={airCompanyMarket}
+                    washerCompanyMarket={washerCompanyMarket}
+                />
             </div>
         )
     }

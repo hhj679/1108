@@ -17,6 +17,7 @@ import './app.less'
 
 import * as global from 'actions/global'
 import * as sidebar from 'actions/sidebar'
+import { auth } from 'actions/login'
 import asyncComponent from './AsyncComponent'
 
 import AppBar from 'material-ui/AppBar'
@@ -28,8 +29,11 @@ import ReactChildrenMap from './containers/Commons/ReactChildrenMap'
 const Business = asyncComponent(() => import(/* webpackChunkName: "business" */ "./containers/Business/Business"))
 const CompanyHome = asyncComponent(() => import(/* webpackChunkName: "company" */ "./containers/Company/CompanyHome"))
 const DeTail = asyncComponent(() => import(/* webpackChunkName: "deTail" */ "./containers/DeTail/DeTail"))
-const Product = asyncComponent(() => import(/* webpackChunkName: "product" */ "./containers/Product/Product"))
+const ProductCategory = asyncComponent(() => import(/* webpackChunkName: "product" */ "./containers/Product/ProductCategory"))
+const ProductList = asyncComponent(() => import(/* webpackChunkName: "product" */ "./containers/Product/ProductList"))
 const Software = asyncComponent(() => import(/* webpackChunkName: "software" */ "./containers/Software/Software"))
+const Patent = asyncComponent(() => import(/* webpackChunkName: "paten" */ "./containers/Patent/Patent"))
+const Login = asyncComponent(() => import(/* webpackChunkName: "login" */ "./containers/Login/Login"))
 
 @connect (
     state => {return {...state.global}},
@@ -70,13 +74,16 @@ export default class App extends React.Component {
                             />
                             <SideBar/>
                             <ReactChildrenMap key={location.pathname}>
-                                <Route location={location} exact path="/" component={Home}/>
-                                <Route location={location} path="/home" component={Home}/>
-                                <Route location={location} path="/business" component={Business}/>
-                                <Route location={location} path="/company" component={CompanyHome}/>
-                                <Route location={location} path="/detail/:type/:id" component={DeTail}/>
-                                <Route location={location} path="/product" component={Product}/>
-                                <Route location={location} path="/software" component={Software}/>
+                                <Route location={location} exact path="/" component={Home} onEnter={auth}/>
+                                <Route location={location} path="/home" component={Home} onEnter={auth}/>
+                                <Route location={location} path="/business" component={Business} onEnter={auth}/>
+                                <Route location={location} path="/company" component={CompanyHome} onEnter={auth}/>
+                                <Route location={location} path="/detail/:type/:id" component={DeTail} onEnter={auth}/>
+                                <Route location={location} path="/product" component={ProductCategory} onEnter={auth}/>
+                                <Route location={location} path="/productlist/:category" component={ProductList} onEnter={auth}/>
+                                <Route location={location} path="/software" component={Software} onEnter={auth}/>
+                                <Route location={location} path="/patent" component={Patent} onEnter={auth}/>
+                                <Route location={location} path="/login" component={Login}/>
                             </ReactChildrenMap>
                           </div>
                         </MuiThemeProvider>

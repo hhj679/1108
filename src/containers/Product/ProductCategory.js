@@ -9,17 +9,13 @@ import { browserHistory } from 'react-router'
 
 //关于import什么时候用{}，什么时候不用大括号，通过那个插件或者组件是否包含default来判断，如果包含，则不需要{}
 
-import AppBar from 'material-ui/AppBar'
+import {List, ListItem} from 'material-ui/List'
 import FontIcon from 'material-ui/FontIcon'
-import {blue500} from 'material-ui/styles/colors'
-import SideBar from 'containers/SideBar/SideBar'
+
 /*actions*/
 import * as product from 'actions/product'
 import * as global from 'actions/global'
 // import * as sidebar from 'actions/sidebar'
-
-import ProductCategory from './components/ProductCategory'
-import ProductList from './components/ProductList'
 
 import './styles/product.less'
 
@@ -34,7 +30,7 @@ import './styles/product.less'
     state => ({...state.product}),
     dispatch => bindActionCreators({...product, ...global}, dispatch)
 )
-export default class Product extends React.Component {
+export default class ProductCategory extends React.Component {
 
     constructor(props) {
         super(props);
@@ -45,43 +41,35 @@ export default class Product extends React.Component {
     }
 
     componentWillMount() {
-        // const { navMain, bookDetails } = this.props
-        // if (navMain.length === 0) {
-        //     this.props.getNav();
-        // }
-
-        // if (bookDetails.length === 0) {
-        //     this.props.getBook()
-        // }
     }
 
-    // handleLeftIconClick() {
-    //     //该函数用来执行组件内部的事件，比如在这里就是nav组件菜单的导航点击事件
-    //     // this.props.history.push('/')
-    //     const { sidebarToggle } = this.props;
-    //     sidebarToggle();
-    // }
-
     handleItemClick(id) {
-        // window.location = "#/detail/product/" + id;
-        this.props.history.push('/product/' + id);
-        // window.location.reload();
+        this.props.history.push('/productlist/' + id);
     }
 
     render() {
-        const { category, products } = this.props
-        let child = (<ProductCategory category={category} onItemClick={this.handleItemClick}/>);
-        if(this.props.match.params.category) {
-            child = (<ProductList products={products}/>);
-        }
+        const { category } = this.props;
+        const that = this;
+
         //还可以通过自定义样式传递给组件
         return(
-            <div className="main-body">
-                {child}
-            </div>
+            <List>
+                {
+                    category.map(function(c, i) {
+                        return(
+                            <ListItem
+                                leftAvatar={<FontIcon className="material-icons list-icon">{c.logo}</FontIcon>}
+                                primaryText={c.name}
+                                key={i}
+                                onClick={that.handleItemClick.bind(that, c.id)}
+                            />
+                        )
+                    })
+                }
+            </List>
         )
     }
 }
-Product.propTypes = {
+ProductCategory.propTypes = {
 
 }

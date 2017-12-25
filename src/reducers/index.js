@@ -5,6 +5,8 @@ import { business } from './business'
 import { company } from './company'
 import { product } from './product'
 import { software } from './software'
+import { patent } from './patent'
+import { login } from './login'
 
 const rootReducer = {
   /* your reducers */
@@ -14,6 +16,8 @@ const rootReducer = {
   business,
   company,
   product,
-  software
+  software,
+  patent,
+  login
 }
 export default rootReducer

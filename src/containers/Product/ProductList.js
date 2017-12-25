@@ -9,17 +9,15 @@ import { browserHistory } from 'react-router'
 
 //关于import什么时候用{}，什么时候不用大括号，通过那个插件或者组件是否包含default来判断，如果包含，则不需要{}
 
-import AppBar from 'material-ui/AppBar'
+import {GridList, GridTile} from 'material-ui/GridList'
+import IconButton from 'material-ui/IconButton'
+import StarBorder from 'material-ui/svg-icons/toggle/star-border'
 import FontIcon from 'material-ui/FontIcon'
-import {blue500} from 'material-ui/styles/colors'
-import SideBar from 'containers/SideBar/SideBar'
+
 /*actions*/
 import * as product from 'actions/product'
 import * as global from 'actions/global'
 // import * as sidebar from 'actions/sidebar'
-
-import ProductCategory from './components/ProductCategory'
-import ProductList from './components/ProductList'
 
 import './styles/product.less'
 
@@ -30,58 +28,66 @@ import './styles/product.less'
  * dispatch用法：（单个action）bindActionCreators(navActions, dispatch)，（多个action）bindActionCreators({...action1, ...action2}, dispatch)
  */
 
+ const listStyle = {
+    margin: '.5rem 0'
+ }
+ const tileStyle = {
+    // margin: '1rem .2rem'
+ }
+
 @connect(
     state => ({...state.product}),
     dispatch => bindActionCreators({...product, ...global}, dispatch)
 )
-export default class Product extends React.Component {
+export default class ProductList extends React.Component {
 
     constructor(props) {
         super(props);
         //构造函数用法
         //常用来绑定自定义函数，切记不要在这里或者组件的任何位置setState，state全部在reducer初始化，相信对开发的后期很有帮助
         //例子：this.myfunction = this.myfunction.bind(this)
-        this.handleItemClick = this.handleItemClick.bind(this);
+        this.handleItemClick = this.handleItemClick.bind(this)
     }
 
     componentWillMount() {
-        // const { navMain, bookDetails } = this.props
-        // if (navMain.length === 0) {
-        //     this.props.getNav();
-        // }
-
-        // if (bookDetails.length === 0) {
-        //     this.props.getBook()
-        // }
     }
 
-    // handleLeftIconClick() {
-    //     //该函数用来执行组件内部的事件，比如在这里就是nav组件菜单的导航点击事件
-    //     // this.props.history.push('/')
-    //     const { sidebarToggle } = this.props;
-    //     sidebarToggle();
-    // }
-
-    handleItemClick(id) {
-        // window.location = "#/detail/product/" + id;
-        this.props.history.push('/product/' + id);
-        // window.location.reload();
+    handleItemClick(pid) {
+        this.props.history.push('/detail/product/' + pid)
     }
 
     render() {
-        const { category, products } = this.props
-        let child = (<ProductCategory category={category} onItemClick={this.handleItemClick}/>);
-        if(this.props.match.params.category) {
-            child = (<ProductList products={products}/>);
-        }
+        const { products=[] } = this.props;
+        const that = this;
+
         //还可以通过自定义样式传递给组件
         return(
-            <div className="main-body">
-                {child}
-            </div>
+            <GridList
+              cellHeight={180}
+              style={listStyle}
+              cols={2}
+              padding={8}
+            >
+                {
+                    products.map(function(p, i) {
+                        return(
+                            <GridTile
+                              key={p.id}
+                              title={p.name}
+                              subtitle={<span>by <b>{p.company}</b></span>}
+                              actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+                              style={tileStyle}
+                              onClick={that.handleItemClick.bind(that, p.id)}
+                            >
+                              <img src={p.img} />
+                            </GridTile>
+                        )
+                    })
+                }
+            </GridList>
         )
     }
 }
-Product.propTypes = {
+ProductList.propTypes = {
 
 }

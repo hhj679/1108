@@ -8,10 +8,14 @@ import PropTypes from 'prop-types'
 
 //关于import什么时候用{}，什么时候不用大括号，通过那个插件或者组件是否包含default来判断，如果包含，则不需要{}
 
+import cloneDeep from 'lodash/cloneDeep'
+
 /*actions*/
 import * as home from 'actions/home'
 import * as global from 'actions/global'
 // import * as sidebar from 'actions/sidebar'
+
+import ChinaMap from '../Commons/ChinaMap'
 
 /*component*/
 // import Header from './components/Header'
@@ -23,9 +27,12 @@ import AppBar from 'material-ui/AppBar'
 import FontIcon from 'material-ui/FontIcon'
 import {blue500} from 'material-ui/styles/colors'
 
+import { lineOption, barOption, pieOption } from '../../utils/highchartUtils'
+import { formatDate } from '../../utils/dateUtils'
+
 // import SideBar from 'containers/SideBar/SideBar'
 import Card from '../Commons/Card'
-
+import Highcharts from 'highcharts'
 
 import './styles/home.less'
 
@@ -47,6 +54,32 @@ export default class Home extends React.Component {
         //构造函数用法
         //常用来绑定自定义函数，切记不要在这里或者组件的任何位置setState，state全部在reducer初始化，相信对开发的后期很有帮助
         //例子：this.myfunction = this.myfunction.bind(this)
+        this.initChart = this.initChart.bind(this)
+    }
+
+    initChart() {
+        const { priceLine } = this.props
+
+        const priceLineData = [], priceLineName = [];
+        const priceLineOption = cloneDeep(lineOption);
+        for (var i = priceLine.length - 1; i >= 0; i--) {
+          priceLineName.push(formatDate(priceLine[i].name, 'MM-dd'));
+          priceLineData.push(priceLine[i].y);
+        }
+        priceLineOption.xAxis.categories = priceLineName;
+        priceLineOption.series.push({
+          name: '价格',
+          data: priceLineData
+        })
+        Highcharts.chart(this.priceLineId, priceLineOption);
+    }
+
+    componentDidMount() {
+        this.initChart()
+    }
+        
+    componentDidUpdate() {
+        this.initChart()
     }
 
     componentWillMount() {
@@ -74,9 +107,11 @@ export default class Home extends React.Component {
         return(
             <div className="home-main main-body">
                 <div className="home-content">
-                    <Card title="市场容量" subtitle="各厂商产品近半年市场容量"></Card>
-                    <Card title="产品价格" subtitle="产品今年价格变化曲线"></Card>
-                    <Card title="专利"></Card>
+                    <Card title="市场容量" subtitle="各厂商产品近半年市场容量"><ChinaMap/></Card>
+                    <Card title="产品价格" subtitle="产品今年价格变化曲线">
+                        <div ref={id => this.priceLineId = id} className="barchart"></div>
+                    </Card>
+                    <Card title="专利分布"><ChinaMap/></Card>
                 </div>
             </div>
         )

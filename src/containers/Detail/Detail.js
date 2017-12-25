@@ -18,6 +18,7 @@ import * as global from 'actions/global'
 // import * as sidebar from 'actions/sidebar'
 
 import CompanyDetail from '../Company/components/CompanyDetail'
+import ProductDetail from '../Product/components/ProductDetail'
 
 import { getArrayItemById } from '../../utils/array'
 
@@ -31,7 +32,7 @@ import './styles/detail.less'
  */
 
 @connect(
-    state => ({...state.company}),
+    state => ({...state.company, ...state.product}),
     dispatch => bindActionCreators({...company, ...global}, dispatch)
 )
 export default class Detail extends React.Component {
@@ -62,7 +63,7 @@ export default class Detail extends React.Component {
     // }
 
     render() {
-        const { match, companys } = this.props;
+        const { match, companys, products, productParam, priceLine, saleLine, feedbackLine, goodfeedback, goodtopic, topicanls, competitivers } = this.props;
         const { type, id } = match.params;
 
         let detailJSX = null;
@@ -70,6 +71,20 @@ export default class Detail extends React.Component {
         if(type == 'company') {
             const company = getArrayItemById(companys, id);
             detailJSX = (<CompanyDetail company={company}/>)
+        } else {
+            const product = getArrayItemById(products, id);
+            detailJSX = (<ProductDetail 
+                product={product} 
+                params={productParam} 
+                priceLine={priceLine} 
+                saleLine={saleLine} 
+                feedbackLine={feedbackLine}
+                goodfeedback={goodfeedback}
+                goodtopic={goodtopic}
+                topicanls={topicanls}
+                competitivers={competitivers}
+                history={this.props.history}
+            />);
         }
         
         //还可以通过自定义样式传递给组件

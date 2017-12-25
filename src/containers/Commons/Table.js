@@ -19,7 +19,7 @@ class ITable extends React.Component {
     }
 
     render() {
-        const { data=[], header=[], fixedHeader=true, selectable=true, multiSelectable=false, displayRowCheckbox=false, height='8rem' } = this.props
+        const { data=[], header=[], fixedHeader=true, selectable=true, multiSelectable=false, displayRowCheckbox=false, height='8rem', showIndex=true } = this.props
        
         return (
             <Table
@@ -48,7 +48,7 @@ class ITable extends React.Component {
                     {
                         data.data.map( (row, index) => (
                           <TableRow key={index}>
-                            <TableRowColumn style={{width: '1rem'}}>{index}</TableRowColumn>
+                            { showIndex?<TableRowColumn style={{width: '1rem'}}>{index}</TableRowColumn>:null}
                             {
                                 data.columns.map( (h, i) => (<TableRowColumn style={{textAlign: 'center'}} key={index + '' + i}>{row[h]}</TableRowColumn>) )
                             }

@@ -1,15 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import cloneDeep from 'lodash/cloneDeep'
+
 import Avatar from 'material-ui/Avatar'
 import Card from '../../Commons/Card'
 import Table from '../../Commons/Table'
 
-import echarts from 'echarts/lib/echarts'
-import 'echarts/lib/component/tooltip'
-import 'echarts/lib/component/grid'
-import 'echarts/lib/chart/bar'
-import 'echarts/lib/chart/line'
+import { lineOption, barOption } from '../../../utils/highchartUtils'
 
 import Highcharts from 'highcharts'
 
@@ -22,66 +20,7 @@ class CompanyDetail extends React.Component {
     }
 
     initPie() {
-        const barOption = {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: ' '
-            },
-            xAxis: {
-                type: 'category'
-            },
-            yAxis: {
-                title: {
-                    text: ''
-                }
-
-            },
-            credits: { 
-                enabled:false 
-            },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                series: {
-                    borderWidth: 0,
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            },
-            series: [{
-                name:'',
-                colorByPoint: true,
-                data: []
-            }]
-        }
-
-        const lineOption = {
-            title: {
-                text: ''
-            },
-            credits: { 
-                enabled:false 
-            },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                series: {
-                    label: {
-                        connectorAllowed: false
-                    },
-                    // pointStart: 2010
-                }
-            },
-            series: []
-        }
-
-
-        const saleOption = Object.assign(barOption);
+        const saleOption = cloneDeep(barOption);
         saleOption.series[0].name = '销量';
         saleOption.series[0].data=[{
             name: '美的KF66/200L-MI(E4)',
@@ -117,7 +56,7 @@ class CompanyDetail extends React.Component {
         Highcharts.chart(this.saleTopId, saleOption);
 
 
-        const goodOption = Object.assign(barOption);
+        const goodOption = cloneDeep(barOption);
         goodOption.series[0].name = '好评量';
         goodOption.series[0].data=[{
             name: '美的KF66/200L-MI(E4)',
@@ -153,7 +92,7 @@ class CompanyDetail extends React.Component {
         Highcharts.chart(this.goodTopId, goodOption);
 
 
-        const badOption = Object.assign(barOption);
+        const badOption = cloneDeep(barOption);
         badOption.series[0].name = '差评量';
         badOption.series[0].data=[{
             name: '美的KF66/200L-MI(E4)',
@@ -189,15 +128,16 @@ class CompanyDetail extends React.Component {
         Highcharts.chart(this.badTopId, badOption);
 
 
-        const patenYearOption = Object.assign(lineOption);
+        const patenYearOption = cloneDeep(lineOption);
         patenYearOption.series.push({
             name: '申请量',
             data: [120, 101, 134, 90, 230, 210]
         });
+        patenYearOption.plotOptions.series = {};
         patenYearOption.plotOptions.series.pointStart = 2012;
         Highcharts.chart(this.patenYearId, patenYearOption);
 
-        const patenPersonOption = Object.assign(barOption);
+        const patenPersonOption = cloneDeep(barOption);
         patenPersonOption.series[0].name = '专利申请量';
         patenPersonOption.series[0].data=[{
             name: '小A',
@@ -233,7 +173,7 @@ class CompanyDetail extends React.Component {
         Highcharts.chart(this.patenPersonId, patenPersonOption);
 
 
-        const patenCategoryOption = Object.assign(barOption);
+        const patenCategoryOption = cloneDeep(barOption);
         patenCategoryOption.series[0].name = '专利分类';
         patenCategoryOption.series[0].data=[{
             name: '分类A',
@@ -268,19 +208,21 @@ class CompanyDetail extends React.Component {
         }]
         Highcharts.chart(this.patenCategoryId, patenCategoryOption);
 
-        const pojectYearOption = Object.assign(lineOption);
+        const pojectYearOption = cloneDeep(lineOption);
         pojectYearOption.series.push({
             name: '项目数',
             data: [120, 101, 134, 90, 230, 210]
         });
+        pojectYearOption.plotOptions.series = {};
         pojectYearOption.plotOptions.series.pointStart = 2012;
         Highcharts.chart(this.projectLineId, pojectYearOption);
 
-        const commitorYearOption = Object.assign(lineOption);
+        const commitorYearOption = cloneDeep(lineOption);
         commitorYearOption.series.push({
             name: '提交量',
             data: [120, 101, 134, 90, 230, 210, 300, 318]
         });
+        commitorYearOption.plotOptions.series = {};
         commitorYearOption.plotOptions.series.pointStart = 2010;
         Highcharts.chart(this.commiteLineId, commitorYearOption);
     }

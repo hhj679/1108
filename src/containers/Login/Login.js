@@ -5,23 +5,25 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { browserHistory } from 'react-router'
 
 //关于import什么时候用{}，什么时候不用大括号，通过那个插件或者组件是否包含default来判断，如果包含，则不需要{}
+import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField'
+import { indigo300 } from 'material-ui/styles/colors'
 
-import AppBar from 'material-ui/AppBar'
-import FontIcon from 'material-ui/FontIcon'
-import {blue500} from 'material-ui/styles/colors'
-import SideBar from 'containers/SideBar/SideBar'
 /*actions*/
-import * as product from 'actions/product'
+import * as login from 'actions/login'
 import * as global from 'actions/global'
 // import * as sidebar from 'actions/sidebar'
 
-import ProductCategory from './components/ProductCategory'
-import ProductList from './components/ProductList'
 
-import './styles/product.less'
+import './styles/login.less'
+
+const styles = {
+    underlineStyle: {
+        borderColor: indigo300
+      }
+}
 
 /**
  * connect中间件
@@ -31,17 +33,16 @@ import './styles/product.less'
  */
 
 @connect(
-    state => ({...state.product}),
-    dispatch => bindActionCreators({...product, ...global}, dispatch)
+    state => ({...state.login}),
+    dispatch => bindActionCreators({...login, ...global}, dispatch)
 )
-export default class Product extends React.Component {
+export default class Login extends React.Component {
 
     constructor(props) {
         super(props);
         //构造函数用法
         //常用来绑定自定义函数，切记不要在这里或者组件的任何位置setState，state全部在reducer初始化，相信对开发的后期很有帮助
         //例子：this.myfunction = this.myfunction.bind(this)
-        this.handleItemClick = this.handleItemClick.bind(this);
     }
 
     componentWillMount() {
@@ -62,26 +63,27 @@ export default class Product extends React.Component {
     //     sidebarToggle();
     // }
 
-    handleItemClick(id) {
-        // window.location = "#/detail/product/" + id;
-        this.props.history.push('/product/' + id);
-        // window.location.reload();
-    }
-
     render() {
-        const { category, products } = this.props
-        let child = (<ProductCategory category={category} onItemClick={this.handleItemClick}/>);
-        if(this.props.match.params.category) {
-            child = (<ProductList products={products}/>);
-        }
+        const { tabIndex, swipeTabs, icepriceLine, airpriceLine, tvpriceLine, washerpriceLine, iceCompanyMarket, tvCompanyMarket, airCompanyMarket, washerCompanyMarket } = this.props
         //还可以通过自定义样式传递给组件
         return(
-            <div className="main-body">
-                {child}
+            <div className="login-main main-body">
+                <TextField
+                  hintText="User"
+                  floatingLabelText="User"
+                  underlineStyle={styles.underlineStyle}
+                /><br />
+                <TextField
+                  hintText="Password"
+                  floatingLabelText="Password"
+                  type="password"
+                  underlineStyle={styles.underlineStyle}
+                /><br />
+                <RaisedButton label="Login" primary={true} />
             </div>
         )
     }
 }
-Product.propTypes = {
+Login.propTypes = {
 
 }
