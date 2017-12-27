@@ -2,6 +2,7 @@
  * Created by Administrator on 2016/7/1.
  */
 import React from 'react'
+import { withRouter } from "react-router-dom"
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -15,7 +16,6 @@ import { indigo300 } from 'material-ui/styles/colors'
 import * as login from 'actions/login'
 import * as global from 'actions/global'
 // import * as sidebar from 'actions/sidebar'
-
 
 import './styles/login.less'
 
@@ -36,13 +36,21 @@ const styles = {
     state => ({...state.login}),
     dispatch => bindActionCreators({...login, ...global}, dispatch)
 )
-export default class Login extends React.Component {
+class Login extends React.Component {
 
     constructor(props) {
         super(props);
         //构造函数用法
         //常用来绑定自定义函数，切记不要在这里或者组件的任何位置setState，state全部在reducer初始化，相信对开发的后期很有帮助
         //例子：this.myfunction = this.myfunction.bind(this)
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+        this.handleUserChange = this.handleUserChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+
+        this.state = {
+          user: '',
+          password: ''
+        };
     }
 
     componentWillMount() {
@@ -56,6 +64,32 @@ export default class Login extends React.Component {
         // }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.isLoggedIn) {
+            // console.log(location)
+            const hash = location.hash.replace('#/login/','');
+            const redirect = hash?decodeURIComponent(hash):'/home'
+            this.props.history.push(redirect);
+        }
+    }
+
+    handleUserChange(event) {
+        this.setState({
+            user: event.target.value,
+        });
+    }
+
+    handlePasswordChange(event) {
+        this.setState({
+            password: event.target.value,
+        });
+    }
+
+    handleLoginClick() {
+        const { login } = this.props;
+        login(this.state.user, this.state.password);
+    }
+
     // handleLeftIconClick() {
     //     //该函数用来执行组件内部的事件，比如在这里就是nav组件菜单的导航点击事件
     //     // this.props.history.push('/')
@@ -64,7 +98,7 @@ export default class Login extends React.Component {
     // }
 
     render() {
-        const { tabIndex, swipeTabs, icepriceLine, airpriceLine, tvpriceLine, washerpriceLine, iceCompanyMarket, tvCompanyMarket, airCompanyMarket, washerCompanyMarket } = this.props
+        const { token, loginError } = this.props
         //还可以通过自定义样式传递给组件
         return(
             <div className="login-main main-body">
@@ -72,14 +106,23 @@ export default class Login extends React.Component {
                   hintText="User"
                   floatingLabelText="User"
                   underlineStyle={styles.underlineStyle}
+                  value={this.state.user}
+                  onChange={this.handleUserChange}
+                  errorText=""
+                  id="text-field-user"
                 /><br />
                 <TextField
                   hintText="Password"
                   floatingLabelText="Password"
                   type="password"
                   underlineStyle={styles.underlineStyle}
+                  value={this.state.password}
+                  onChange={this.handlePasswordChange}
+                  errorText=""
+                  id="text-field-password"
                 /><br />
-                <RaisedButton label="Login" primary={true} />
+                <span className="errorText">{loginError}</span><br />
+                <RaisedButton label="Login" primary={true} onClick={this.handleLoginClick}/>
             </div>
         )
     }
@@ -87,3 +130,5 @@ export default class Login extends React.Component {
 Login.propTypes = {
 
 }
+
+export default withRouter(Login)

@@ -2,17 +2,20 @@
  * Created by Administrator on 2016/7/2.
  */
 import React from 'react'
+import { withRouter } from "react-router-dom"
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 /*actions*/
 import * as sidebar from 'actions/sidebar'
+import * as login from 'actions/login'
 
 import Avatar from './components/Avatar'
 // import Menu from './components/Menu'
 
 import Drawer from 'material-ui/Drawer'
+import Divider from 'material-ui/Divider'
 import MenuItem from 'material-ui/MenuItem'
 import FontIcon from 'material-ui/FontIcon'
 
@@ -28,9 +31,9 @@ const menuItemStyle = {
 
 @connect(
     state => ({...state.sidebar}),
-    dispatch => bindActionCreators({...sidebar}, dispatch)
+    dispatch => bindActionCreators({...sidebar, ...login}, dispatch)
 )
-export default class SideBar extends React.Component {
+class SideBar extends React.Component {
     constructor(props) {
         super(props)
         // this.hotClick = this.hotClick.bind(this)
@@ -42,9 +45,15 @@ export default class SideBar extends React.Component {
         // this.props.receiveHotSearch()
     }
     handleItemClick(key) {
-        const { sidebarToggle } = this.props;
+        const { sidebarToggle, logout } = this.props;
 
-        window.location.hash = "#/" + key;
+        // window.location.hash = "#/" + key;
+        if(key == 'logout') {
+            logout();
+            this.props.history.push('/login/' + encodeURIComponent(location.hash.substr(1)))
+        } else {
+            this.props.history.push('/' + key);
+        }
         
         // if(index == 0) {
         //     window.location.hash='#/'
@@ -89,6 +98,14 @@ export default class SideBar extends React.Component {
                     )
                   })
                 }
+                <Divider/>
+                <MenuItem 
+                    primaryText="Logout" 
+                    onClick={that.handleItemClick.bind(that, 'logout')} 
+                    leftIcon={<FontIcon className="material-icons menu-icon">exit_to_app</FontIcon>} 
+                    key={'logout'}
+                    innerDivStyle={menuItemStyle}
+                />
             </Drawer>
         )
     }
@@ -99,3 +116,4 @@ SideBar.propTypes = {
     menus: PropTypes.array,
     sidebarToggle: PropTypes.func
 }
+export default withRouter(SideBar)

@@ -23,6 +23,8 @@ import asyncComponent from './AsyncComponent'
 import AppBar from 'material-ui/AppBar'
 import FontIcon from 'material-ui/FontIcon'
 
+import { readData } from './utils/cookie'
+
 import Home from 'containers/Home/Home'
 import SideBar from 'containers/SideBar/SideBar'
 import ReactChildrenMap from './containers/Commons/ReactChildrenMap'
@@ -36,7 +38,7 @@ const Patent = asyncComponent(() => import(/* webpackChunkName: "paten" */ "./co
 const Login = asyncComponent(() => import(/* webpackChunkName: "login" */ "./containers/Login/Login"))
 
 @connect (
-    state => {return {...state.global}},
+    state => {return {...state.global, ...state.login}},
     dispatch => bindActionCreators({...global, ...sidebar}, dispatch)
 )
 export default class App extends React.Component {
@@ -44,6 +46,16 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleHeaderMenuClick = this.handleHeaderMenuClick.bind(this)
+  }
+
+  componentWillMount() {
+    if(!auth() && !location.hash.startsWith('#/login')){
+      let hash = location.hash;
+      if(hash.startsWith('#')){
+        hash = hash.substr(1);
+      }
+      history.push('/login/' + encodeURIComponent(hash))
+    }
   }
 
   componentDidMount() {
@@ -63,26 +75,47 @@ export default class App extends React.Component {
       return (
           <Router history={history}>
               <Route render={({ location }) => {
+                  //check login here
+                  // console.log(location)
+                  // if(!auth() || location.pathname =='/login') {
+                  //   if(!location.pathname.startsWith('/login')){
+                  //     history.push('/login?redirect=' + (location.pathname=='/'?'/home':location.pathname))
+                  //   }
+                  //   return(
+                  //     <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)} >
+                  //       <Login/>
+                  //     </MuiThemeProvider>
+                  //   )
+                  // }
+                  let head = null;
+                  if(readData('token') !== null) {
+                    head = (
+                      <div>
+                        <AppBar
+                          title="首页"
+                          iconElementRight={<FontIcon className="muidocs-icon-action-home"></FontIcon>}
+                          onLeftIconButtonClick={that.handleHeaderMenuClick}
+                          style={{backgroundColor: 'rgba(74, 127, 169, 1)'}}
+                        />
+                        <SideBar/>
+                      </div>
+                    )
+                  }
+                  
                   return(
                         <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)} >
                           <div className="root-main">
-                            <AppBar
-                              title="首页"
-                              iconElementRight={<FontIcon className="muidocs-icon-action-home"></FontIcon>}
-                              onLeftIconButtonClick={that.handleHeaderMenuClick}
-                              style={{backgroundColor: 'rgba(74, 127, 169, 1)'}}
-                            />
-                            <SideBar/>
+                            {head}
                             <ReactChildrenMap key={location.pathname}>
-                                <Route location={location} exact path="/" component={Home} onEnter={auth}/>
-                                <Route location={location} path="/home" component={Home} onEnter={auth}/>
-                                <Route location={location} path="/business" component={Business} onEnter={auth}/>
-                                <Route location={location} path="/company" component={CompanyHome} onEnter={auth}/>
-                                <Route location={location} path="/detail/:type/:id" component={DeTail} onEnter={auth}/>
-                                <Route location={location} path="/product" component={ProductCategory} onEnter={auth}/>
-                                <Route location={location} path="/productlist/:category" component={ProductList} onEnter={auth}/>
-                                <Route location={location} path="/software" component={Software} onEnter={auth}/>
-                                <Route location={location} path="/patent" component={Patent} onEnter={auth}/>
+                                <Route location={location} exact path="/" component={Home}/>
+                                <Route location={location} path="/home" component={Home}/>
+                                <Route location={location} path="/business" component={Business}/>
+                                <Route location={location} path="/company" component={CompanyHome}/>
+                                <Route location={location} path="/detail/:type/:id" component={DeTail}/>
+                                <Route location={location} path="/product" component={ProductCategory}/>
+                                <Route location={location} path="/productlist/:category" component={ProductList}/>
+                                <Route location={location} path="/software" component={Software}/>
+                                <Route location={location} path="/patent" component={Patent}/>
                                 <Route location={location} path="/login" component={Login}/>
                             </ReactChildrenMap>
                           </div>
